@@ -77,9 +77,9 @@ class GetLiveHeights
 		$last_announce_at = Date::createFromTimestamp(Cache::get('last_announce_at', fn() => 0));
 		[$min, $avg, $max] = GetThresholds::run();
 		
-		Event::listen(function(StreamerReachedNewFloor $event) use (&$last_announce_at, $avg, $max) {
-			// Don't announce more than every 10 mins, even if leaderboard is topped
-			if ($last_announce_at->gt(now()->subMinutes(10))) {
+		Event::listen(function(StreamerReachedNewFloor $event) use (&$last_announce_at, $min, $avg, $max) {
+			// Don't announce low floors or more than every 10 mins no matter what
+			if ($event->height->height < $min || $last_announce_at->gt(now()->subMinutes(10))) {
 				return;
 			}
 			
