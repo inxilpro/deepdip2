@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Date;
 
 class LiveHeight
 {
+	public Floor $floor;
+	
 	public static function fromJson(array|object $data): static 
 	{
 		return new static(
@@ -28,6 +30,7 @@ class LiveHeight
 		public float $previous_height = 0,
 	)
 	{
+		$this->floor = Floor::at($this->height);
 	}
 	
 	public function toArray(): array
