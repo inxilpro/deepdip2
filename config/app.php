@@ -123,5 +123,5 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
-	'threshold' => 1075,
+	'threshold' => 1250,
 ];
